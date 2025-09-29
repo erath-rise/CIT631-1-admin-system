@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { employeeAPI } from "@/lib/api";
+import { DialogContent } from '@/components/ui/dialog';
 
 interface Employee {
   _id: string;
@@ -173,6 +174,21 @@ export default function EmployeeForm({ employee, onSubmit, onCancel }: EmployeeF
               placeholder="请输入电话"
               required
             />
+          </div>
+          {/* department */}
+          <div>
+            <label className="block text-sm font-medium text-gray-700 mb-1">
+              部门 <span className="text-red-500">*</span>
+            </label>
+            <select
+              className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500"
+              value={formData.department}
+              onChange={(e) => handleInputChange("department", e.target.value)}
+            >
+              {departments.map(department => (
+                <option key={department} value={department}>{department}</option>
+              ))}
+            </select>
           </div>
 
           <div>
