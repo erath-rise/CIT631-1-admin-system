@@ -117,9 +117,10 @@ export default function EmployeeForm({ employee, onSubmit, onCancel }: EmployeeF
         emergencyContact: formData.emergencyContact.name ? formData.emergencyContact : undefined
       };
 
-      // 移除空字符串字段
+      // 移除空字符串字段，但保留必需字段
+      const requiredFields = ['name', 'email', 'phone', 'department', 'position', 'salary', 'hireDate', 'status'];
       Object.keys(submitData).forEach(key => {
-        if (submitData[key as keyof typeof submitData] === "") {
+        if (submitData[key as keyof typeof submitData] === "" && !requiredFields.includes(key)) {
           delete submitData[key as keyof typeof submitData];
         }
       });
@@ -184,7 +185,9 @@ export default function EmployeeForm({ employee, onSubmit, onCancel }: EmployeeF
               className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500"
               value={formData.department}
               onChange={(e) => handleInputChange("department", e.target.value)}
+              required
             >
+              <option value="">请选择部门</option>
               {departments.map(department => (
                 <option key={department} value={department}>{department}</option>
               ))}
